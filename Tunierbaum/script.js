@@ -7,6 +7,7 @@ const playersMaindraw = ['Haupt 1', 'Haupt 2',
   'Haupt 5', 'Haupt 6',
   '?', '?']
 
+
 let quali_ready = 0;
 
 const basic = document.getElementById('basics');
@@ -94,7 +95,6 @@ function buildMaindraw() {
   maindraw.appendChild(r1l);
 }
 
-
 function updateQuali(){
   const brackets = [...document.querySelectorAll('.bracket')];
   const bracket = brackets[0];
@@ -134,10 +134,8 @@ function updateQuali(){
           if (x===2){
             quali_ready = 1;
           }
-
         })
     })
-
 }
 
 function updateMaindraw(){
@@ -169,8 +167,21 @@ function updateMaindraw(){
               const nextRoundWinner = rounds[roundIndex + 1];
               const nextRoundLoser = rounds[rounds.length - roundIndex - 1];
               console.log(nextRoundLoser);
-              const nextMatchWinner = nextRoundWinner.querySelectorAll('.match')[matchIndex % 2];
-              const nextMatchLoser = nextRoundLoser.querySelectorAll('.match')[matchIndex % 2];
+              let nextMatchWinner;
+              let nextMatchLoser;
+              if (roundIndex === 0) {
+                //1st Round
+                if (matchIndex === 0 || matchIndex === 3) {
+                  nextIndex = 0;
+                } else
+                  nextIndex = 1;
+                nextMatchWinner = nextRoundWinner.querySelectorAll('.match')[nextIndex];
+                nextMatchLoser = nextRoundLoser.querySelectorAll('.match')[1-nextIndex];
+              } else {
+                //2nd Round
+                nextMatchWinner = nextRoundWinner.querySelectorAll('.match')[matchIndex % 2];
+                nextMatchLoser = nextRoundLoser.querySelectorAll('.match')[1-matchIndex];
+              }
               const targetClassLoser = Math.floor(matchIndex / 2) === 0 ? '.team1' : '.team2';
               const targetClassWinner = Math.floor(matchIndex / 2) === 0 ? '.team1' : '.team2';
               nextMatchWinner.querySelector(targetClassWinner).textContent = winner;
@@ -179,13 +190,16 @@ function updateMaindraw(){
               // Final
             } else {
               if (roundIndex === 2) {
+                // Semifinal
                 const nextRound = rounds[roundIndex + 1];
                 const nextMatch = nextRound.querySelectorAll('.match')[Math.floor(matchIndex / 2)];
                 const targetClass = matchIndex % 2 === 0 ? '.team1' : '.team2';
                 nextMatch.querySelector(targetClass).textContent = winner;
               } else {
                 let nextRound
+                //1st Loser Round
                 if (roundIndex === 5) nextRound = rounds[roundIndex - 1];
+                //2nd Loser Round
                 else nextRound = rounds[roundIndex - 2];
                 const nextMatch = nextRound.querySelectorAll('.match')[matchIndex];
                 const targetClass = '.team2';
@@ -194,21 +208,14 @@ function updateMaindraw(){
             }
           }
 
-        //Loser
-
-
-
       })
     })
 
 }
 
-
 function update() {
   updateQuali();
-  if (quali_ready > 0) {
-    updateMaindraw();
-  }
+  updateMaindraw();
 }
 
 

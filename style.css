@@ -26,6 +26,12 @@ body {
   margin-top: 100px;
 }
 
+.dropdown{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
 .round {
   display: flex;
   flex-direction: column;

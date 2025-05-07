@@ -53,7 +53,7 @@ function buildQualification() {
   qualification.appendChild(r2);
   const heading = document.createElement("h2");
   heading.textContent = "Qualifikation";
-  qualification.insertBefore(heading, qualification.firstChild.nextSibling);
+  qualification.insertBefore(heading, qualification.firstChild);
 }
 
 function buildDropdown(){

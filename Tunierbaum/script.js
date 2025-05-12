@@ -418,7 +418,6 @@ function updateMaindraw(){
               // Winner Round with 2nd Chance
               const nextRoundWinner = rounds[roundIndex + 1];
               const nextRoundLoser = rounds[rounds.length - roundIndex - 1];
-              console.log(nextRoundLoser);
               let nextMatchWinner;
               let nextMatchLoser;
               if (roundIndex === 0) {
@@ -449,11 +448,16 @@ function updateMaindraw(){
                 nextMatch.querySelector(targetClass).textContent = winner;
               } else {
                 let nextRound
+                let nextMatch
                 //1st Loser Round
-                if (roundIndex === 5) nextRound = rounds[roundIndex - 1];
+                if (roundIndex === 5) {nextRound = rounds[roundIndex - 1];
+                nextMatch = nextRound.querySelectorAll('.match')[1-matchIndex];
+                }
                 //2nd Loser Round
-                else nextRound = rounds[roundIndex - 2];
-                const nextMatch = nextRound.querySelectorAll('.match')[matchIndex];
+                else {
+                nextRound = rounds[roundIndex - 2];
+                nextMatch = nextRound.querySelectorAll('.match')[matchIndex];
+                }
                 const targetClass = '.team2';
                 nextMatch.querySelector(targetClass).textContent = winner;
               }

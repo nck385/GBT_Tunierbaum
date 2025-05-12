@@ -1,11 +1,15 @@
-const playersQuali = ['Quali 1', 'Quali 2',
-  'Quali 3', 'Quali 4',
-  'Quali 5', 'Quali 6'];
+const playersQuali = ['?', '?',
+  '?', '?',
+  '?', '?'];
 
-const playersMaindraw = ['Haupt 1', 'Haupt 2',
-  'Haupt 3', 'Haupt 4',
-  'Haupt 5', 'Haupt 6',
+const qualiPlayers = Array(6);
+
+const playersMaindraw = ['?', '?',
+  '?', '?',
+  '?', '?',
   '?', '?']
+
+const maindrawPlayers = Array(8);
 
 const basic = document.getElementById('basics');
 
@@ -53,55 +57,224 @@ function buildQualification() {
   qualification.appendChild(r2);
   const heading = document.createElement("h2");
   heading.textContent = "Qualifikation";
-  qualification.insertBefore(heading, qualification.firstChild);
+  qualification.insertBefore(heading, qualification.firstChild.nextSibling.nextSibling);
 }
 
-function buildDropdown(){
+function buildDropdownQauli(){
     dd = document.createElement('div');
     dd.classList.add('dropdown');
-    const nameLabel = document.createElement('label');
-    nameLabel.textContent = 'Name: ';
-    const nameInput = document.createElement('input');
-    nameInput.type = 'text';
-    nameInput.id = 'name';
 
-    const wertLabel = document.createElement('label');
-    wertLabel.textContent = ' Wert: ';
-    const wertInput = document.createElement('input');
-    wertInput.type = 'text';
-    wertInput.id = 'wert';
+    const q1Label = document.createElement('label');
+    q1Label.textContent = 'Quali Seed 1: ';
+    const q1Input = document.createElement('input');
+    q1Input.type = 'text';
+    q1Input.id = '';
+    dd.appendChild(q1Label);
+    dd.appendChild(q1Input);
+
+    const q2Label = document.createElement('label');
+    q2Label.textContent = 'Quali Seed 2: ';
+    const q2Input = document.createElement('input');
+    q2Input.type = 'text';
+    q2Input.id = '';
+    dd.appendChild(q2Label);
+    dd.appendChild(q2Input);
+
+
+    const q3Label = document.createElement('label');
+    q3Label.textContent = 'Quali Seed 3: ';
+    const q3Input = document.createElement('input');
+    q3Input.type = 'text';
+    q3Input.id = '';
+    dd.appendChild(q3Label);
+    dd.appendChild(q3Input);
+
+
+    const q4Label = document.createElement('label');
+    q4Label.textContent = 'Quali Seed 4: ';
+    const q4Input = document.createElement('input');
+    q4Input.type = 'text';
+    q4Input.id = '';
+    dd.appendChild(q4Label);
+    dd.appendChild(q4Input);
+
+
+    const q5Label = document.createElement('label');
+    q5Label.textContent = 'Quali Seed 5: ';
+    const q5Input = document.createElement('input');
+    q5Input.type = 'text';
+    q5Input.id = '';
+    dd.appendChild(q5Label);
+    dd.appendChild(q5Input);
+
+
+    const q6Label = document.createElement('label');
+    q6Label.textContent = 'Quali Seed 6: ';
+    const q6Input = document.createElement('input');
+    q6Input.type = 'text';
+    q6Input.id = '';
+    dd.appendChild(q6Label);
+    dd.appendChild(q6Input);
 
     const button = document.createElement('button');
-    button.textContent = 'Zur Liste hinzufügen';
+    button.textContent = 'Quali-Spieler einfügen';
 
     const liste = document.createElement('ul');
     liste.id = 'liste';
-
-    // Alles zur Seite hinzufügen
-    dd.appendChild(nameLabel);
-    dd.appendChild(nameInput);
-    dd.appendChild(wertLabel);
-    dd.appendChild(wertInput);
     dd.appendChild(button);
     dd.appendChild(liste);
 
     // Event Listener für Button
     button.addEventListener('click', () => {
-      const name = nameInput.value;
-      const wert = wertInput.value;
+      qualiPlayers[0] = q1Input.value;
+      qualiPlayers[1] = q2Input.value;
+      qualiPlayers[2] = q3Input.value;
+      qualiPlayers[3] = q4Input.value;
+      qualiPlayers[4] = q5Input.value;
+      qualiPlayers[5] = q6Input.value;
 
-      if (name && wert) {
-        const eintrag = document.createElement('li');
-        eintrag.textContent = `${name}: ${wert}`;
-        liste.appendChild(eintrag);
-
-        // Felder leeren
-        nameInput.value = '';
-        wertInput.value = '';
-      }
+      insertPlayersQuali();
     });
 
     qualification.appendChild(dd);
+}
+
+function buildDropdownMaindraw(){
+    ddm = document.createElement('div');
+    ddm.classList.add('dropdown');
+
+    const q1Label = document.createElement('label');
+    q1Label.textContent = 'Hauptfeld Seed 1: ';
+    const q1Input = document.createElement('input');
+    q1Input.type = 'text';
+    q1Input.id = '';
+    ddm.appendChild(q1Label);
+    ddm.appendChild(q1Input);
+
+    const q2Label = document.createElement('label');
+    q2Label.textContent = 'Hauptfeld Seed 2: ';
+    const q2Input = document.createElement('input');
+    q2Input.type = 'text';
+    q2Input.id = '';
+    ddm.appendChild(q2Label);
+    ddm.appendChild(q2Input);
+
+
+    const q3Label = document.createElement('label');
+    q3Label.textContent = 'Hauptfeld Seed 3: ';
+    const q3Input = document.createElement('input');
+    q3Input.type = 'text';
+    q3Input.id = '';
+    ddm.appendChild(q3Label);
+    ddm.appendChild(q3Input);
+
+
+    const q4Label = document.createElement('label');
+    q4Label.textContent = 'Hauptfeld Seed 4: ';
+    const q4Input = document.createElement('input');
+    q4Input.type = 'text';
+    q4Input.id = '';
+    ddm.appendChild(q4Label);
+    ddm.appendChild(q4Input);
+
+
+    const q5Label = document.createElement('label');
+    q5Label.textContent = 'Hauptfeld Seed 5: ';
+    const q5Input = document.createElement('input');
+    q5Input.type = 'text';
+    q5Input.id = '';
+    ddm.appendChild(q5Label);
+    ddm.appendChild(q5Input);
+
+
+    const q6Label = document.createElement('label');
+    q6Label.textContent = 'Hauptfeld Seed 6: ';
+    const q6Input = document.createElement('input');
+    q6Input.type = 'text';
+    q6Input.id = '';
+    ddm.appendChild(q6Label);
+    ddm.appendChild(q6Input);
+
+    const button = document.createElement('button');
+    button.textContent = 'Hauptfeld-Spieler einfügen';
+
+    const liste = document.createElement('ul');
+    liste.id = 'liste';
+
+    ddm.appendChild(button);
+    ddm.appendChild(liste);
+
+    // Event Listener für Button
+    button.addEventListener('click', () => {
+      maindrawPlayers[0] = q1Input.value;
+      maindrawPlayers[1] = q2Input.value;
+      maindrawPlayers[2] = q3Input.value;
+      maindrawPlayers[3] = q4Input.value;
+      maindrawPlayers[4] = q5Input.value;
+      maindrawPlayers[5] = q6Input.value;
+      maindrawPlayers[6] = '?';
+      maindrawPlayers[7] = '?';
+
+      insertPlayersMaindraw();
+    });
+
+    qualification.appendChild(ddm);
+}
+
+function insertPlayersQuali() {
+  const allBrackets = document.querySelectorAll('.bracket');
+    allBrackets.forEach((bracket, indexB) =>{
+      const allMatches = bracket.querySelectorAll('.match');
+      const allRounds = bracket.querySelectorAll('.round');
+
+
+      allMatches.forEach((match, index) => {
+        const team1 = match.querySelector('.team1');
+        const team2 = match.querySelector('.team2');
+        // Teamnamen setzen
+        //Qauli
+        if (indexB === 0) {
+          if(allRounds[0].contains(match)) {
+            team1.textContent = qualiPlayers[qualiPlayers.length - index - 1];
+            console.log(qualiPlayers);
+            team2.textContent = qualiPlayers[index];
+          }
+          if(allRounds[1].contains(match)) {
+            team1.textContent = qualiPlayers[qualiPlayers.length - index - 3];
+            team2.textContent = '?';
+          }
+        }
+      });
+  });
+
+}
+
+function insertPlayersMaindraw() {
+  const allBrackets = document.querySelectorAll('.bracket');
+    allBrackets.forEach((bracket, indexB) =>{
+      const allMatches = bracket.querySelectorAll('.match');
+      const allRounds = bracket.querySelectorAll('.round');
+
+
+      allMatches.forEach((match, index) => {
+        const team1 = match.querySelector('.team1');
+        const team2 = match.querySelector('.team2');
+        // Teamnamen setzen
+        if (indexB === 1) {
+          if (allRounds[0].contains(match)) {
+            // Erste Runde → Startteams einsetzen
+
+            team1.textContent = maindrawPlayers[index];
+            team2.textContent = maindrawPlayers[maindrawPlayers.length - index - 1];
+
+          } else {
+            // Weitere Runden → Platzhalter „?“ setzen
+            if (team1) team1.textContent = '?';
+            if (team2) team2.textContent = '?';
+          }
+        }
+      });
+  });
 }
 
 function buildMaindraw() {
@@ -182,8 +355,7 @@ function buildMaindraw() {
 function updateQuali(){
   const brackets = [...document.querySelectorAll('.bracket')];
   const bracket = brackets[0];
-  let x = 0;
-    const rounds = [...bracket.querySelectorAll('.round')];
+  const rounds = [...bracket.querySelectorAll('.round')];
     rounds.forEach((round, roundIndex) => {
         const matches = [...round.querySelectorAll('.match')];
         matches.forEach((match, matchIndex) => {
@@ -345,7 +517,8 @@ function update() {
   updateMaindraw();
 }
 
-//buildDropdown();
+buildDropdownQauli();
+buildDropdownMaindraw();
 buildQualification();
 buildMaindraw();
 document.addEventListener('input', update);

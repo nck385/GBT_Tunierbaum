@@ -237,7 +237,7 @@ function insertPlayersQuali() {
           if(allRounds[0].contains(match)) {
             team1.textContent = qualiPlayers[qualiPlayers.length - index - 1];
             console.log(qualiPlayers);
-            team2.textContent = qualiPlayers[index];
+            team2.textContent = qualiPlayers[index+2];
           }
           if(allRounds[1].contains(match)) {
             team1.textContent = qualiPlayers[qualiPlayers.length - index - 3];

@@ -41,7 +41,6 @@ function buildQualification() {
   // Runde 2: Finale
   const r2 = document.createElement('div');
   r2.classList.add('round');
-  //const finale = createMatch('?', '?', 2, 0);
   r2.appendChild(createMatch('?', '?'));
   r2.appendChild(createMatch('?', '?'));
 
@@ -79,7 +78,7 @@ function buildMaindraw() {
   headingr2w.textContent = "Viertelfinale Winner";
   r2w.insertBefore(headingr2w, r2w.firstChild);
 
-  // Runde 3: Finale
+  // Runde 3: Halbfinale und Finale
   const fin = document.createElement('div');
   fin.classList.add('round');
   fin.appendChild(createMatch('?', '?'));
@@ -411,7 +410,3 @@ buildQualification();
 buildMaindraw();
 document.addEventListener('input', update);
 document.getElementById('resetButton').addEventListener('click', reset);
-
-
-
-

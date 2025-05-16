@@ -52,3 +52,11 @@ input[type="number"] {
   width: 40px;
   margin: 0 5px;
 }
+
+.loser {
+  font-weight: lighter;
+}
+
+.winner {
+  font-weight: 900;
+}

@@ -1,23 +1,11 @@
-const playersQuali = ['?', '?',
-  '?', '?',
-  '?', '?'];
+
 const numOfSeedsQ = 6;
 const numOfSeedsM = 6;
 const numOfRoundsM = 6;
 
-let qualiPlayers = ['?', '?',
-  '?', '?',
-  '?', '?'];
+let qualiPlayers = ['?', '?', '?', '?', '?', '?'];
 
-const playersMaindraw = ['?', '?',
-  '?', '?',
-  '?', '?',
-  '?', '?'];
-
-let maindrawPlayers = ['?', '?',
-  '?', '?',
-  '?', '?',
-  '?', '?'];
+let maindrawPlayers = ['?', '?', '?', '?', '?', '?', '?', '?'];
 
 const basic = document.getElementById('basics');
 
@@ -43,8 +31,8 @@ function buildQualification() {
   // Runde 1: Halbfinale
   const r1 = document.createElement('div');
   r1.classList.add('round');
-  r1.appendChild(createMatch(playersQuali[5], playersQuali[2]));
-  r1.appendChild(createMatch(playersQuali[4], playersQuali[3]));
+  r1.appendChild(createMatch('?', '?'));
+  r1.appendChild(createMatch('?', '?'));
 
   const quali1 = document.createElement("h3");
   quali1.textContent = "Runde 1";
@@ -54,8 +42,8 @@ function buildQualification() {
   const r2 = document.createElement('div');
   r2.classList.add('round');
   //const finale = createMatch('?', '?', 2, 0);
-  r2.appendChild(createMatch(playersQuali[1], '?'));
-  r2.appendChild(createMatch(playersQuali[0], '?'));
+  r2.appendChild(createMatch('?', '?'));
+  r2.appendChild(createMatch('?', '?'));
 
   const quali2 = document.createElement("h3");
   quali2.textContent = "Runde 2";
@@ -387,22 +375,6 @@ function updateMaindraw(){
           }
       })
     })
-}
-
-function evalGame (team1, team2, score1, score2){
-    if (isNaN(score1)) {
-        score1 = 0
-    }
-    if (isNaN(score2)) {
-        score2 = 0
-    }
-    if (score1 === score2) return [NaN, NaN];
-    if (score1 > 1 || score2 > 1) {
-        const erg = score1 > score2 ? [team1, team2] : [team2, team1];
-        return erg;
-    }
-    return [NaN, NaN];
-
 }
 
 function reset(){

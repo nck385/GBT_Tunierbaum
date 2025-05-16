@@ -263,19 +263,11 @@ function updateQuali(){
     rounds.forEach((round, roundIndex) => {
         const matches = [...round.querySelectorAll('.match')];
         matches.forEach((match, matchIndex) => {
-          let score1 = parseInt(match.querySelector('.score1').value);
-          let score2 = parseInt(match.querySelector('.score2').value);
-          const team1 = match.querySelector('.team1').textContent;
-          const team2 = match.querySelector('.team2').textContent;
-          if (isNaN(score1)) {
-            score1 = 0
-          }
-          if (isNaN(score2)) {
-            score2 = 0
-          }
-          if (score1 > 1 || score2 > 1) {
-            if (score1 === score2) return;
-            let winner = score1 > score2 ? team1 : team2;
+            const erg = evalGame(match)
+            const winner = erg[0];
+            const loser = erg[1];
+            if (winner !== "") {
+            highlightTeam(match, winner);
             if(roundIndex === 0) {
               //Runde 1 auswerten
               const nextRound = rounds[1];
@@ -291,6 +283,8 @@ function updateQuali(){
               const targetClass = '.team2';
               nextMatch.querySelector(targetClass).textContent = winner + " [" + (8-matchIndex) + "]";
             }
+          } else {
+              removeHighlight(match);
           }
         })
     })
@@ -306,20 +300,11 @@ function updateMaindraw(){
         const matches = [...round.querySelectorAll('.match')];
         matches.forEach((match, matchIndex) => {
 
-          let score1 = parseInt(match.querySelector('.score1').value);
-          let score2 = parseInt(match.querySelector('.score2').value);
-          const team1 = match.querySelector('.team1').textContent;
-          const team2 = match.querySelector('.team2').textContent;
-          if (isNaN(score1)) {
-            score1 = 0
-          }
-          if (isNaN(score2)) {
-            score2 = 0
-          }
-          if (score1 > 1 || score2 > 1) {
-            if (score1 === score2) return;
-            const winner = score1 > score2 ? team1 : team2;
-            const loser = score2 > score1 ? team1 : team2;
+          const erg = evalGame(match)
+          const winner = erg[0];
+          const loser = erg[1];
+          if (winner !== "") {
+            highlightTeam(match, winner);
 
             if (roundIndex < ((numOfRoundsM/2) -1)) {
               // Winner Round with 2nd Chance
@@ -371,6 +356,8 @@ function updateMaindraw(){
                 }
                 nextMatch.querySelector(targetClass).textContent = winner;
               }
+          } else {
+              removeHighlight(match);
           }
       })
     })
@@ -380,9 +367,9 @@ function reset(){
     qualiPlayers = ['?', '?', '?', '?', '?', '?'];
     maindrawPlayers = ['?', '?', '?', '?', '?', '?', '?', '?'];
     const allBrackets = document.querySelectorAll('.bracket');
-    allBrackets.forEach((bracket, indexB) =>{
+    allBrackets.forEach((bracket) =>{
       const allMatches = bracket.querySelectorAll('.match');
-      allMatches.forEach((match, index) => {
+      allMatches.forEach((match) => {
           const score1 = match.querySelector('.score1');
           const score2 = match.querySelector('.score2');
           const team1 = match.querySelector('.team1');
@@ -397,6 +384,46 @@ function reset(){
           if (team2) team2.textContent = '?';
       });
   });
+}
+
+function highlightTeam(match, winner) {
+    const team1 = match.querySelector('.team1').textContent;
+    const team2 = match.querySelector('.team2').textContent;
+    if (team1 === winner) {
+        match.querySelector('.team1').classList.add('winner');
+        match.querySelector('.team2').classList.add('loser');
+    } else if (team2 === winner) {
+        match.querySelector('.team2').classList.add('winner');
+        match.querySelector('.team1').classList.add('loser');
+    }
+}
+
+function removeHighlight(match) {
+    match.querySelector('.team1').classList.remove('winner');
+    match.querySelector('.team2').classList.remove('winner');
+    match.querySelector('.team1').classList.remove('loser');
+    match.querySelector('.team2').classList.remove('loser');
+}
+
+function evalGame(match) {
+    let score1 = parseInt(match.querySelector('.score1').value);
+    let score2 = parseInt(match.querySelector('.score2').value);
+    const team1 = match.querySelector('.team1').textContent;
+    const team2 = match.querySelector('.team2').textContent;
+    if (isNaN(score1)) {
+        score1 = 0
+    }
+    if (isNaN(score2)) {
+        score2 = 0
+    }
+    let winner = "";
+    let loser = "";
+    if (score1 > 1 || score2 > 1) {
+        if (score1 === score2) return [winner,loser];
+        winner = score1 > score2 ? team1 : team2;
+        loser = score2 > score1 ? team1 : team2;
+    }
+    return [winner, loser];
 }
 
 function update() {

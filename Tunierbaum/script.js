@@ -1,7 +1,10 @@
 
-const numOfSeedsQ = 6;
-const numOfSeedsM = 6;
-const numOfRoundsM = 6;
+const numOfSeedsQ = [6, 0];
+const numOfSeedsM = [6, 16];
+const numOfRoundsQ = [2, 0];
+const numOfRoundsM = [6, 8];
+
+let mode;
 
 let qualiPlayers = ['?', '?', '?', '?', '?', '?'];
 
@@ -27,56 +30,57 @@ function createMatch(player1, player2) {
   return div;
 }
 
-function buildQualification() {
-  // Runde 1: Halbfinale
-  const r1 = document.createElement('div');
-  r1.classList.add('round');
-  r1.appendChild(createMatch('?', '?'));
-  r1.appendChild(createMatch('?', '?'));
+function buildQualification(rounds) {
+  for (let i = 0; i < rounds; i++) {
+      const r1 = document.createElement('div');
+      r1.classList.add('round');
+      r1.appendChild(createMatch('?', '?'));
+      r1.appendChild(createMatch('?', '?'));
 
-  const quali1 = document.createElement("h3");
-  quali1.textContent = "Runde 1";
-  r1.insertBefore(quali1, r1.firstChild);
+      const quali1 = document.createElement("h3");
+      quali1.classList.add('roundHeader');
+      quali1.textContent = "Runde " + (i+1);
+      r1.insertBefore(quali1, r1.firstChild);
+      qualification.appendChild(r1);
+  }
 
-  // Runde 2: Finale
-  const r2 = document.createElement('div');
-  r2.classList.add('round');
-  r2.appendChild(createMatch('?', '?'));
-  r2.appendChild(createMatch('?', '?'));
-
-  const quali2 = document.createElement("h3");
-  quali2.textContent = "Runde 2";
-  r2.insertBefore(quali2, r2.firstChild);
-
-  qualification.appendChild(r1);
-  qualification.appendChild(r2);
   const heading = document.createElement("h2");
   heading.textContent = "Qualifikation";
+  heading.style.marginLeft = '80px';
   qualification.insertBefore(heading, qualification.firstChild.nextSibling.nextSibling);
 }
 
 function buildMaindraw() {
   // Runde 1: Achtelfinale Winner
-  const r1w = document.createElement('div');
-  r1w.classList.add('round');
-  r1w.appendChild(createMatch('?', '?'));
-  r1w.appendChild(createMatch('?', '?'));
-  r1w.appendChild(createMatch('?', '?'));
-  r1w.appendChild(createMatch('?', '?'));
+    const r1wm = document.createElement('div');
+    r1wm.classList.add('allRounds');
+    const r1w = document.createElement('div');
+    r1w.classList.add('round');
+    r1w.appendChild(createMatch('?', '?'));
+    r1w.appendChild(createMatch('?', '?'));
+    r1w.appendChild(createMatch('?', '?'));
+    r1w.appendChild(createMatch('?', '?'));
 
   const headingr1w = document.createElement("h3");
+  headingr1w.classList.add('roundHeader');
   headingr1w.textContent = "Achtelfinale";
-  r1w.insertBefore(headingr1w, r1w.firstChild);
+  r1wm.appendChild(headingr1w);
+    r1wm.appendChild(r1w);
+
 
   // Runde 2: Viertelfinale Winner
+    const  r2wm = document.createElement('div');
+    r2wm.classList.add('allRounds');
   const r2w = document.createElement('div');
   r2w.classList.add('round');
   r2w.appendChild(createMatch('?', '?'));
   r2w.appendChild(createMatch('?', '?'));
 
   const headingr2w = document.createElement("h3");
+  headingr2w.classList.add('roundHeader');
   headingr2w.textContent = "Viertelfinale Winner";
-  r2w.insertBefore(headingr2w, r2w.firstChild);
+  r2wm.appendChild(headingr2w);
+  r2wm.appendChild(r2w);
 
   // Runde 3: Halbfinale und Finale
   const fin = document.createElement('div');
@@ -86,55 +90,67 @@ function buildMaindraw() {
   fin.appendChild(createMatch('?', '?'));
 
   const headinghf1 = document.createElement("h3");
+  headinghf1.classList.add('roundHeader');
   headinghf1.textContent = "Halbfinale 1";
   const headinghf2 = document.createElement("h3");
+  headinghf2.classList.add('roundHeader');
   headinghf2.textContent = "Halbfinale 2";
   const headingfin = document.createElement("h3");
+  headingfin.classList.add('roundHeader');
   headingfin.textContent = "Finale";
   fin.insertBefore(headinghf2, fin.firstChild.nextSibling.nextSibling);
   fin.insertBefore(headingfin, fin.firstChild.nextSibling);
   fin.insertBefore(headinghf1, fin.firstChild);
 
   // Runde 4: Viertelfinale Loser
+    const r2lm = document.createElement('div');
+    r2lm.classList.add('allRounds');
   const r2l = document.createElement('div');
   r2l.classList.add('round');
   r2l.appendChild(createMatch('?', '?'));
   r2l.appendChild(createMatch('?', '?'));
 
   const headingr2l = document.createElement("h3");
+  headingr2l.classList.add('roundHeader');
   headingr2l.textContent = "Viertelfinale Loser";
-  r2l.insertBefore(headingr2l, r2l.firstChild);
+  r2lm.appendChild(headingr2l);
+  r2lm.appendChild(r2l);
 
   // Runde 5: Achtelfinale Loser
+    const r1lm = document.createElement('div');
+    r1lm.classList.add('allRounds');
   const r1l = document.createElement('div');
   r1l.classList.add('round');
   r1l.appendChild(createMatch('?', '?'));
   r1l.appendChild(createMatch('?', '?'));
 
   const headingr1l = document.createElement("h3");
+  headingr1l.classList.add('roundHeader');
   headingr1l.textContent = "Achtelfinale Loser";
-  r1l.insertBefore(headingr1l, r1l.firstChild);
+  r1lm.appendChild(headingr1l);
+  r1lm.appendChild(r1l);
 
-  maindraw.appendChild(r1w);
-  maindraw.appendChild(r2w);
+  maindraw.appendChild(r1wm);
+  maindraw.appendChild(r2wm);
   maindraw.appendChild(fin);
-  maindraw.appendChild(r2l);
-  maindraw.appendChild(r1l);
+  maindraw.appendChild(r2lm);
+  maindraw.appendChild(r1lm);
 
   const heading = document.createElement("h2");
   heading.textContent = "Hauptrunde";
   maindraw.insertBefore(heading, maindraw.firstChild);
 }
 
-function buildDropdownQauli(){
+function buildDropdownQauli(seeds){
     const dd = document.createElement('div');
     dd.classList.add('dropdown');
     const inputs = [];
-    for (let i = 0; i < numOfSeedsQ; i++) {
+    for (let i = 0; i < seeds; i++) {
         const label = document.createElement('label');
         label.textContent = 'Quali Seed ' + (i+1) + ': ';
         const input = document.createElement('input');
         input.type = 'text';
+        input.classList.add('inputs');
         input.id = '';
         dd.appendChild(label);
         dd.appendChild(input);
@@ -142,12 +158,10 @@ function buildDropdownQauli(){
     }
 
     const button = document.createElement('button');
+    button.classList.add('button');
     button.textContent = 'Quali-Spieler einfügen';
 
-    const liste = document.createElement('ul');
-    liste.id = 'liste';
     dd.appendChild(button);
-    dd.appendChild(liste);
 
     // Event Listener für Button
     button.addEventListener('click', () => {
@@ -160,16 +174,17 @@ function buildDropdownQauli(){
     qualification.appendChild(dd);
 }
 
-function buildDropdownMaindraw(){
+function buildDropdownMaindraw(seeds){
     const ddm = document.createElement('div');
     ddm.classList.add('dropdown');
 
     const inputs = [];
-    for (let i = 0; i < numOfSeedsM; i++) {
+    for (let i = 0; i < seeds; i++) {
         const label = document.createElement('label');
         label.textContent = 'Hauptfeld Seed ' + (i+1) + ': ';
         const input = document.createElement('input');
         input.type = 'text';
+        input.classList.add('inputs');
         input.id = '';
         ddm.appendChild(label);
         ddm.appendChild(input);
@@ -177,12 +192,10 @@ function buildDropdownMaindraw(){
     }
 
     const button = document.createElement('button');
+    button.classList.add('button');
     button.textContent = 'Hauptfeld-Spieler einfügen';
 
-    const liste = document.createElement('ul');
-    liste.id = 'liste';
     ddm.appendChild(button);
-    ddm.appendChild(liste);
 
     // Event Listener für Button
     button.addEventListener('click', () => {
@@ -431,9 +444,38 @@ function update() {
   updateMaindraw();
 }
 
-buildDropdownQauli();
-buildDropdownMaindraw();
-buildQualification();
+function readOutDrop(){
+    mode = document.getElementById('auswahl').value;
+    updatePage();
+}
+
+function updatePage(){
+    let i = 0; // default
+    if (mode === 'eightTeamsDoubleOut') {
+        i = 0;
+        buildDropdownQauli(numOfSeedsQ[i]);
+        buildDropdownMaindraw(numOfSeedsM[i]);
+        buildQualification(numOfRoundsQ[i]);
+
+        buildMaindraw(numOfRoundsM[i]);
+
+    } else if (mode === 'sixteenTeamsDoubleOut') {
+        i = 1;
+        buildDropdownMaindraw(numOfSeedsM[i]);
+
+        buildMaindraw(numOfRoundsM[i]);
+
+    }
+
+
+
+}
+
+//readOutDrop();
+buildDropdownQauli(numOfSeedsQ[0]);
+buildDropdownMaindraw(numOfRoundsM[0]);
+buildQualification(2);
 buildMaindraw();
+//document.getElementById('auswahl').addEventListener('change', readOutDrop);
 document.addEventListener('input', update);
 document.getElementById('resetButton').addEventListener('click', reset);
